@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undian | Jalan Sehat</title>
+    <link rel="shortcut icon" href="./asset/img/icon.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Montserrat:700' rel='stylesheet'>
+    <link rel="stylesheet" href="./asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./asset/css/style.css">
+    <script src="./asset/js/jquery.min.js"></script>
+    <script src="./asset/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="section-1">
+        <img src="./asset/img/pengundian.png" alt="Logo" class="header-logo">
+        <div class="undian mb-3 mt-4">
+            <input type="text" class="w-75 font-weight-bold" id="rand_kupon" value="NOMOR UNDIAN" readonly />
+        </div>
+        <button id="btnUndi" class="btn-grad mb-3 font-weight-bold">START</button>
+        <div id="pemenang" class="pemenang mb-3"></div>
+        <table class="table table-sm table-bordered table-striped tabel-undian">
+            <thead>
+                <tr>
+                    <th scope="col">Pemenang</th>
+                    <th scope="col">Undian</th>
+                    <th scope="col">Pemenang</th>
+                    <th scope="col">Undian</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">4</th>
+                    <td id="undi-4"></td>
+                    <th scope="row">13</th>
+                    <td id="undi-13"></td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td id="undi-5"></td>
+                    <th scope="row">14</th>
+                    <td id="undi-14"></td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td id="undi-6"></td>
+                    <th scope="row">15</th>
+                    <td id="undi-15"></td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
+                    <td id="undi-7"></td>
+                    <th scope="row">16</th>
+                    <td id="undi-16"></td>
+                </tr>
+                <tr>
+                    <th scope="row">8</th>
+                    <td id="undi-8"></td>
+                    <th scope="row">17</th>
+                    <td id="undi-17"></td>
+                </tr>
+                <tr>
+                    <th scope="row">9</th>
+                    <td id="undi-9"></td>
+                    <th scope="row">18</th>
+                    <td id="undi-18"></td>
+                </tr>
+                <tr>
+                    <th scope="row">10</th>
+                    <td id="undi-10"></td>
+                    <th scope="row">19</th>
+                    <td id="undi-19"></td>
+                </tr>
+                <tr>
+                    <th scope="row">11</th>
+                    <td id="undi-11"></td>
+                    <th scope="row">20</th>
+                    <td id="undi-20"></td>
+                </tr>
+                <tr>
+                    <th scope="row">12</th>
+                    <td id="undi-12"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
+
+    <div class="modal fade" id="modalPemenang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selamat 🎉</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="text_pemenang"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" onclick="simpan();"
+                        data-dismiss="modal">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onbeforeunload = function () {
+            return "Perubahan yang anda lakukan mungkin tidak disimpan.";
+        }
+
+        var pemenang = new Array(), data = [];
+        var wins = new Audio('./asset/audio/applause.mp3');
+        var ticks = new Audio('./asset/audio/tick.mp3');
+        var interval, index, started = 0, undi = 20;
+
+        ticks.loop = true;
+        ticks.playbackRate = 5;
+
+        function start() {
+            ticks.play();
+            interval = setInterval(() => {
+                index = Math.floor(Math.random() * parseInt(data.length+1));
+                $('#rand_kupon').val(data[index]);
+            }, 100);
+            $('#btnUndi').html('STOP');
+        }
+
+        function stop() {
+            clearInterval(interval);
+            ticks.pause();
+            wins.play();
+            let pesan = 'Pemenang <strong>ke-' + undi + '</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            if (undi == 1) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Sepeda</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            if (undi == 2) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Smartphone</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            if (undi == 3) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>TV Digital</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            $('#text_pemenang').html(pesan);
+            $('#modalPemenang').modal({ backdrop: 'static', keyboard: false });
+            $('#modalPemenang').modal('show');
+            $('#btnUndi').html('START');
+        }
+
+        function simpan() {
+            let hadiah = "";
+            if (undi == 1) hadiah = "Sepeda";
+            if (undi == 2) hadiah = "Smartphone";
+            if (undi == 3) hadiah = "TV Digital";
+            pemenang.push({ juara: undi, undian: data[index], hadiah: hadiah });
+            if (undi > 3) {
+                $(`#undi-${undi}`).html(data[index]);
+            } else {
+                $('#pemenang').prepend('<div class="kolom"><label class="text-light font-weight-bold mt-3 mb-3 f-montserrat700">PEMENANG ' + undi + '</label><p class="id-pemenang"><span class="font-weight-bold fs-xl">' + data[index] + '</span><br><span>' + hadiah + '</span></p></div>');
+            }
+            data = data.filter(function (val) {
+                return val != data[index];
+            });
+            undi--;
+            // console.log(pemenang.length);
+            // console.log(data.length);
+        }
+
+        $(document).ready(() => {
+            for (let i = 0; i < 800; i++) {
+                data.push(parseInt(i+1));
+            }
+
+            $('#btnUndi').on('click', () => {
+                if (undi < 1) {
+                    alert('Undian sudah selesai');
+                    return;
+                }
+                if (started === 0) {
+                    start();
+                    started++;
+                } else if (started === 1) {
+                    stop()
+                    started--;
+                }
+            });
+
+            // console.log(data);
+        });
+    </script>
+</body>
+
+</html>

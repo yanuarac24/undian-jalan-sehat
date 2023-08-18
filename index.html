@@ -9,9 +9,11 @@
     <link rel="shortcut icon" href="./asset/img/icon.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Roboto|Montserrat:700' rel='stylesheet'>
     <link rel="stylesheet" href="./asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./asset/css/sweetalert2.min.css">
     <link rel="stylesheet" href="./asset/css/style.css">
     <script src="./asset/js/jquery.min.js"></script>
     <script src="./asset/js/bootstrap.min.js"></script>
+    <script src="./asset/js/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +22,7 @@
         <div class="undian mb-3 mt-4">
             <input type="text" class="w-75 font-weight-bold" id="rand_kupon" value="NOMOR UNDIAN" readonly />
         </div>
-        <button id="btnUndi" class="btn-grad mb-3 font-weight-bold">START</button>
+        <button id="btnUndi" class="btn btn-grad mb-3 font-weight-bold">START</button>
         <div id="pemenang" class="pemenang mb-3"></div>
         <table class="table table-sm table-bordered table-striped tabel-undian">
             <thead>
@@ -89,7 +91,7 @@
         <br><br>
     </div>
 
-    <div class="modal fade" id="modalPemenang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="modalPemenang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -108,13 +110,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script>
         window.onbeforeunload = function () {
             return "Perubahan yang anda lakukan mungkin tidak disimpan.";
         }
 
-        var pemenang = new Array(), data = [];
+        var pemenang = [], data = [];
         var wins = new Audio('./asset/audio/applause.mp3');
         var ticks = new Audio('./asset/audio/tick.mp3');
         var interval, index, started = 0, undi = 20;
@@ -125,8 +127,13 @@
         function start() {
             ticks.play();
             interval = setInterval(() => {
-                index = Math.floor(Math.random() * parseInt(data.length+1));
+                index = Math.floor(Math.random() * parseInt(data.length));
                 $('#rand_kupon').val(data[index]);
+                if (typeof data[index] !== "number") {
+                    clearInterval(interval);
+                    console.log(`index : ${index}, value : ${data[index]}`);
+                    console.log(data);
+                }
             }, 100);
             $('#btnUndi').html('STOP');
         }
@@ -135,13 +142,14 @@
             clearInterval(interval);
             ticks.pause();
             wins.play();
-            let pesan = 'Pemenang <strong>ke-' + undi + '</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            if (undi == 1) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Sepeda</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            if (undi == 2) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Smartphone</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            if (undi == 3) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>TV Digital</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            $('#text_pemenang').html(pesan);
-            $('#modalPemenang').modal({ backdrop: 'static', keyboard: false });
-            $('#modalPemenang').modal('show');
+            // let pesan = 'Pemenang <strong>ke-' + undi + '</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            // if (undi == 1) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Sepeda</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            // if (undi == 2) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Smartphone</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            // if (undi == 3) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>TV Digital</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
+            // $('#text_pemenang').html(pesan);
+            // $('#modalPemenang').modal({ backdrop: 'static', keyboard: false });
+            // $('#modalPemenang').modal('show');
+            notifMenang();
             $('#btnUndi').html('START');
         }
 
@@ -160,15 +168,50 @@
                 return val != data[index];
             });
             undi--;
-            // console.log(pemenang.length);
-            // console.log(data.length);
+        }
+
+        function notifMenang() {
+            Swal.fire({
+                title: data[index],
+                text: `Pemenang ke-${undi}`,
+                showCancelButton: true,
+                confirmButtonColor: '#9B0005',
+                cancelButtonColor: '#3F7FB5',
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    simpan();
+                }
+            })
+        }
+
+        function inputPeserta() {
+            Swal.fire({
+                title: 'Masukkan Jumlah Undian',
+                input: 'number',
+                inputPlaceholder: 'Jumlah Undian',
+                confirmButtonColor: '#9B0005',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Jumlah Undian Belum Terisi'
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    for (let i = 0; i < parseInt(result.value); i++) {
+                        data.push(parseInt(i+1));
+                    }
+                    console.log(data);
+                }
+            })
         }
 
         $(document).ready(() => {
-            for (let i = 0; i < 800; i++) {
-                data.push(parseInt(i+1));
-            }
-
             $('#btnUndi').on('click', () => {
                 if (undi < 1) {
                     alert('Undian sudah selesai');
@@ -182,6 +225,8 @@
                     started--;
                 }
             });
+
+            inputPeserta();
 
             // console.log(data);
         });

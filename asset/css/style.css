@@ -28,7 +28,7 @@ html {
 }
 
 #rand_kupon {
-    font-size: x-large;
+    font-size: xxx-large;
     color: black;
     border: 0;
     text-align: center;
@@ -42,9 +42,10 @@ html {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 10px 30px;
-    border: 0px;
+    padding: 20px 40px;
+    /* border: 0px; */
     font-size: large;
+    color: white;
     font-family: 'Montserrat';
     border-radius: 10px;
 }
@@ -54,8 +55,8 @@ html {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 10px 30px;
-    border: 0px;
+    padding: 20px 40px;
+    /* border: 0px; */
     border-radius: 10px;
 }
 

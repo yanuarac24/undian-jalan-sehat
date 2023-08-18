@@ -1,0 +1,119 @@
+body {
+    background: url('../img/background.png') no-repeat;
+    min-height : 100%;
+    min-width : 100%;
+    background-size:100% 100%;
+}
+
+/* .section-1 {
+    background-position: center;
+    background-repeat: repeat-y;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    min-height: 700px;
+} */
+
+.header-logo {
+    width: 522px;
+    height: 336px;
+}
+
+.undian {
+    /* position: relative;
+    left: 30%; */
+    background-color: #9B0005;
+    /* width: 40%; */
+    padding: 0;
+}
+
+#rand_kupon {
+    font-size: xxx-large;
+    color: black;
+    border: 0;
+    /* text-align: center; */
+    padding: 5px;
+    margin: 15px;
+    font-family: 'Roboto';
+}
+
+.btn-grad {
+    background-image: url('../img/button.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px 40px;
+    /* border: 0px; */
+    font-size: large;
+    color: white;
+    font-family: 'Montserrat';
+    border-radius: 10px;
+}
+
+.btn-grad:active {
+    background-image: url('../img/button-klik.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px 40px;
+    /* border: 0px; */
+    border-radius: 10px;
+}
+
+/* .pemenang {
+    position: relative;
+    left: 15%;
+    width: 70%;
+    text-align: center;
+    align-items: center;
+} */
+
+.kolom {
+    background-image: url('../img/kolom-pemenang.png');
+    background-size: cover;
+    background-position: center;
+    /* display: inline-block;
+    margin: 7px;
+    width: 20%; */
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+/* .tabel-undian {
+    position: relative;
+    left: 30%;
+    width: 40%;
+} */
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid #9B0005;
+}
+
+.id-pemenang {
+    font-family: 'Roboto';
+}
+
+.f-montserrat700 {
+    font-family: 'Montserrat';
+    font-weight: 700;
+}
+
+.f-roboto {
+    font-family: 'Roboto';
+}
+
+.fs-sm {
+    font-size: small;
+}
+
+.fs-l {
+    font-size: large;
+}
+
+.fs-xl {
+    font-size: x-large;
+}
+
+.fs-xxl {
+    font-size: xx-large;
+}

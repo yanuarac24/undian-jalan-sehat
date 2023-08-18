@@ -17,34 +17,28 @@
 </head>
 
 <body>
-    <div class="container-fluid text-center">
-        <div class="row">
-            <div class="col-12">
+    <div class="pernik"></div>
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
                 <img src="./asset/img/pengundian.png" alt="Logo" class="header-logo">
             </div>
         </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-xl-4 col-lg-6 col-md-10 col-sm-10">
-                <div class="undian mb-3 mt-4">
-                    <input type="text" class="w-75 font-weight-bold text-center" id="rand_kupon" value="NOMOR UNDIAN" readonly />
+        <div class="row mb-3 d-flex justify-content-center">
+            <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10">
+                <div class="undian text-center">
+                    <input type="text" class="font-weight-bold text-center" id="rand_kupon" value="UNDIAN" readonly />
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3 text-center">
             <div class="col-12">
-                <button id="btnUndi" class="btn btn-grad mb-3 font-weight-bold">START</button>
+                <button id="btnUndi" class="btn btn-grad font-weight-bold">START</button>
             </div>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-xl-5 col-lg-7 col-md-10 col-sm-10">
-                <div class="pemenang mb-3">
-                    <div id="pemenang" class="row d-flex justify-content-center"></div>
-                </div>
-            </div>
-        </div>
+        </div><br>
         <div class="row d-flex justify-content-center">
             <div class="col-xl-4 col-lg-6 col-md-10 col-sm-10">
-                <table class="table table-sm table-bordered table-striped tabel-undian">
+                <table id="tabel-pemenang" class="table table-sm table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <th scope="col">Pemenang</th>
@@ -54,58 +48,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td id="undi-4"></td>
-                            <th scope="row">13</th>
-                            <td id="undi-13"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td id="undi-5"></td>
-                            <th scope="row">14</th>
-                            <td id="undi-14"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td id="undi-6"></td>
-                            <th scope="row">15</th>
-                            <td id="undi-15"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td id="undi-7"></td>
-                            <th scope="row">16</th>
-                            <td id="undi-16"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td id="undi-8"></td>
-                            <th scope="row">17</th>
-                            <td id="undi-17"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9</th>
-                            <td id="undi-9"></td>
-                            <th scope="row">18</th>
-                            <td id="undi-18"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">10</th>
-                            <td id="undi-10"></td>
-                            <th scope="row">19</th>
-                            <td id="undi-19"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">11</th>
-                            <td id="undi-11"></td>
-                            <th scope="row">20</th>
-                            <td id="undi-20"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">12</th>
-                            <td id="undi-12"></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -113,26 +55,6 @@
         <br><br>
     </div>
 
-    <!-- <div class="modal fade" id="modalPemenang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Selamat 🎉</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="text_pemenang"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" onclick="simpan();"
-                        data-dismiss="modal">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <script>
         window.onbeforeunload = function () {
             return "Perubahan yang anda lakukan mungkin tidak disimpan.";
@@ -151,11 +73,6 @@
             interval = setInterval(() => {
                 index = Math.floor(Math.random() * parseInt(data.length));
                 $('#rand_kupon').val(data[index]);
-                if (typeof data[index] !== "number") {
-                    clearInterval(interval);
-                    console.log(`index : ${index}, value : ${data[index]}`);
-                    console.log(data);
-                }
             }, 100);
             $('#btnUndi').html('STOP');
         }
@@ -164,29 +81,13 @@
             clearInterval(interval);
             ticks.pause();
             wins.play();
-            // let pesan = 'Pemenang <strong>ke-' + undi + '</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            // if (undi == 1) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Sepeda</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            // if (undi == 2) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>Smartphone</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            // if (undi == 3) pesan = 'Pemenang <strong>ke-' + undi + '</strong> dengan hadiah <strong>TV Digital</strong> adalah nomor undian <strong>' + data[index] + '</strong>';
-            // $('#text_pemenang').html(pesan);
-            // $('#modalPemenang').modal({ backdrop: 'static', keyboard: false });
-            // $('#modalPemenang').modal('show');
             notifMenang();
             $('#btnUndi').html('START');
         }
 
         function simpan() {
-            let hadiah = "";
-            if (undi == 1) hadiah = "Sepeda";
-            if (undi == 2) hadiah = "Smartphone";
-            if (undi == 3) hadiah = "TV Digital";
-            pemenang.push({ juara: undi, undian: data[index], hadiah: hadiah });
-            if (undi > 3) {
-                $(`#undi-${undi}`).html(data[index]);
-            } else {
-                // $('#pemenang').prepend('<div class="kolom"><label class="text-light font-weight-bold mt-3 mb-3 f-montserrat700">PEMENANG ' + undi + '</label><p class="id-pemenang"><span class="font-weight-bold fs-xl">' + data[index] + '</span><br><span>' + hadiah + '</span></p></div>');
-                $('#pemenang').prepend('<div class="col-3 kolom mx-2"><label class="text-light font-weight-bold mt-3 mb-3 f-montserrat700">PEMENANG ' + undi + '</label><p class="id-pemenang"><span class="font-weight-bold fs-xl">' + data[index] + '</span><br><span>' + hadiah + '</span></p></div>');
-            }
+            pemenang.push({ juara: undi, undian: data[index] });
+            $(`#undi-${undi}`).html(data[index]);
             data = data.filter(function (val) {
                 return val != data[index];
             });
@@ -203,6 +104,9 @@
                 confirmButtonText: 'Simpan',
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
+                customClass: {
+                    title: 'fs-xxxl'
+                },
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -219,6 +123,9 @@
                 confirmButtonColor: '#9B0005',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false,
+                customClass: {
+                    input: 'text-center'
+                },
                 inputValidator: (value) => {
                     if (!value) {
                         return 'Jumlah Undian Belum Terisi'
@@ -230,6 +137,44 @@
                         data.push(parseInt(i+1));
                     }
                     console.log(data);
+                    inputHadiah();
+                }
+            })
+        }
+
+        function inputHadiah() {
+            Swal.fire({
+                title: 'Masukkan Jumlah Hadiah',
+                input: 'number',
+                inputPlaceholder: 'Jumlah Hadiah',
+                confirmButtonColor: '#9B0005',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                customClass: {
+                    input: 'text-center'
+                },
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Jumlah Hadiah Belum Terisi'
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    undi = result.value;
+                    let ganjil = result.value % 2;
+                    let h = (ganjil) ? Math.floor(result.value / 2) + 1 : result.value / 2;
+                    for (let i = 0; i < h; i++) {
+                        if (i == (h-1)) {
+                            if (ganjil) {
+                                $('#tabel-pemenang').append(`<tr><th scope="row">${i+1}</th><td id="undi-${i+1}"></td></tr>`);
+                            } else {
+                                $('#tabel-pemenang').append(`<tr><th scope="row">${i+1}</th><td id="undi-${i+1}"></td><th scope="row">${i+(h+1)}</th><td id="undi-${i+(h+1)}"></td></tr>`);
+                            }
+                        } else {
+                            $('#tabel-pemenang').append(`<tr><th scope="row">${i+1}</th><td id="undi-${i+1}"></td><th scope="row">${i+(h+1)}</th><td id="undi-${i+(h+1)}"></td></tr>`);
+                        }
+                    }
+                    console.log(undi);
                 }
             })
         }
@@ -250,8 +195,6 @@
             });
 
             inputPeserta();
-
-            // console.log(data);
         });
     </script>
 </body>
